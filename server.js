@@ -35,12 +35,27 @@ app.get('/', function(req, res) {
     var tagline = "No programming concept is complete without a cute animal mascot.";
 
     var user = "Claudio";
+    
 
-    res.render('pages/index', {
-        mascots: mascots,
-        tagline: tagline,
-        user: user
+    employees.find({}, function(err, result) {
+        if (err) {
+          res.send(err);
+        } else {
+            res.render('pages/index', {
+              mascots: mascots,
+              tagline: tagline,
+              user: user,
+              result: result,
+              error: req.query.error,
+              itemdeleted: req.query.deleted,
+              itemnodeleted: req.query.nodeleted,
+              iteminserted: req.query.message,
+              itemnoinserted: req.query.messageerror
+        })
+        };
+
     });
+    
 });
 // about page
 app.get('/about', function(req, res) {
