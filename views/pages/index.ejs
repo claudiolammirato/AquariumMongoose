@@ -12,52 +12,7 @@
 <main>
     <div class="jumbotron">
         <h1>Dashboard</h1>
-        <p>List of parameters uploaded</p>
-        <% for(var i = 0; i < result.length; i++) {%>
-            <li class="quote">
-              <span><%= result[i]._id %></span>:
-            <!-- Output name from the iterated quote object -->
-            <span><%= result[i].name %></span>:
-            <!-- Output quote from the iterated quote object -->
-            <span><%= result[i].age %></span>
-            <!-- Output quote from the iterated quote object -->
-            <span><%= result[i].location %></span>
-            </li>
-        <% } %>
-        <h2>Parameters</h2>
-        <form action="/api/insertdata" method="post">
-            <label for="fname">Name:</label>
-            <input type="text" id="name" name="name"><br><br>
-            <label for="lname">Age:</label>
-            <input type="text" id="age" name="age"><br><br>
-            <label for="lname">Location:</label>
-            <input type="text" id="location" name="location"><br><br>
-            <input type="submit" value="Insert">
-          </form>
-          <p><%= iteminserted %></p>
-          <p><%= itemnoinserted %></p>
-          <h2>Delete</h2>
-        <form action="/api/deletedata" method="post">
-            <label for="fname">Id:</label>
-            <input type="text" id="id" name="id"><br><br>
-            <input type="submit" value="Delete">
-          </form>
-          <p><%= itemdeleted %></p>
-          <p><%= itemnodeleted %></p>
-
-          <h2>Update</h2>
-        <form action="/api/updatedata" method="post">
-            <label for="fname">ID to update:</label>
-            <input type="text" id="id_update" name="id_update"><br><br>
-            <label for="fname">Name:</label>
-            <input type="text" id="name_update" name="name_update"><br><br>
-            <label for="lname">Age:</label>
-            <input type="text" id="age_update" name="age_update"><br><br>
-            <label for="lname">Location:</label>
-            <input type="text" id="location_update" name="location_update"><br><br>
-            <input type="submit" value="Update">
-          </form>
-          <p><%= error %></p>
+        
         <p><%= tagline %></p>
     </div>
     

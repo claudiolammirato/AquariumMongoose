@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <%- include('../partials/head'); %>
+</head>
+<body class="container">
+
+<header>
+    <%- include('../partials/header'); %>
+</header>
+
+<main>
+    <div class="jumbotron">
+      <div class="container">
+        <div class="row">
+          <div class="col-sm">
+            <h2>Parameters Insert</h2>
+        <form action="/api/insertparameters" method="post">
+            <label for="fname">Date:</label>
+            <input type="date" id="date" name="date"><br><br>
+            <label for="lname">PH:</label>
+            <input type="text" id="ph" name="ph"><br><br>
+            <label for="lname">Ammonia:</label>
+            <input type="text" id="ammonia" name="ammonia"><br><br>
+            <label for="lname">Nitrite:</label>
+            <input type="text" id="nitrite" name="nitrite"><br><br>
+            <label for="lname">Nitrate:</label>
+            <input type="text" id="nitrate" name="nitrate"><br><br>
+            <label for="lname">Temperature:</label>
+            <input type="text" id="temperature" name="temperature"><br><br>
+            <label for="lname">Water Change:</label>
+            <input type="date" id="water_change" name="water_change"><br><br>
+            <input type="submit" value="Insert">
+          </form>
+          <p><%= iteminserted %></p>
+          <p><%= itemnoinserted %></p>
+          
+          </div>
+          <div class="col-sm">
+            <h2>Update Parameters</h2>
+            <form action="/api/updateparameters" method="post">
+                <label for="fname">ID to update:</label>
+                <input type="text" id="id_update" name="id_update"><br><br>
+                <label for="fname">Date:</label>
+                <input type="date" id="date_update" name="date_update"><br><br>
+                <label for="lname">PH:</label>
+                <input type="text" id="ph_update" name="ph_update"><br><br>
+                <label for="lname">Ammonia:</label>
+                <input type="text" id="ammonia_update" name="ammonia_update"><br><br>
+                <label for="lname">Nitrite:</label>
+                <input type="text" id="nitrite_update" name="nitrite_update"><br><br>
+                <label for="lname">Nitrate:</label>
+                <input type="text" id="nitrate_update" name="nitrate_update"><br><br>
+                <label for="lname">Temperature:</label>
+                <input type="text" id="temperature_update" name="temperature_update"><br><br>
+                <label for="lname">Water Change:</label>
+                <input type="date" id="water_change_update" name="water_change_update"><br><br>
+                <input type="submit" value="Update">
+              </form>
+              <p><%= error %></p>
+            </div>
+          <div class="col-sm">
+            <h2>Delete Parameters</h2>
+              <form action="/api/deleteparameters" method="post">
+                <label for="fname">Id:</label>
+                <input type="text" id="id" name="id"><br><br>
+                <input type="submit" value="Delete">
+              </form>
+          <p><%= itemdeleted %></p>
+          <p><%= itemnodeleted %></p>
+          </div>
+        </div>
+      </div>
+        <h1>Dashboard</h1>
+        
+            
+        
+
+        <p>List of parameters uploaded</p>     
+  <% for(var i = 0; i < result.length; i++) {%>  
+    <li class="parameters">
+        <span><%= result[i]._id %></span>:
+      <!-- Output name from the iterated quote object -->
+      <span><%= result[i].date %></span>:
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].ph %></span>
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].ammonia %></span>
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].nitrite %></span>
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].nitrate %></span>
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].temperature %></span>
+      <!-- Output quote from the iterated quote object -->
+      <span><%= result[i].water_change %></span>
+      </li>
+  <% } %>
+</main>
+
+<footer>
+    <%- include('../partials/footer'); %>
+</footer>
+
+</body>
+</html>

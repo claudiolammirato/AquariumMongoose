@@ -1,19 +1,20 @@
 const express = require('express');
 const router = express.Router();
-const employees = require('../model');
+const Users = require("../models/user_model");
+const Params = require("../models/params_model");
 
-
-  router.route("/insertdata").post(function(req, res) {
-    const name = req.body.name;
-    const  age = req.body.age;
-    const location = req.body.location;
-    if (name == '' || age == '' || location == '' ) {
+//USERS
+  router.route("/insertuser").post(function(req, res) {
+    const user = req.body.user;
+    const  email = req.body.email;
+    const password = req.body.password;
+    if (user == '' || email == '' || password == '' ) {
       const messageerror = "Fill in all the data!"
       res.redirect('/?messageerror='+messageerror);
     }else{
-      console.log(name);
+      console.log(user);
 
-    employees.insertMany([{name: name, age: age, location: location}], function(err, result) {
+    Users.insertMany([{user: user, email: email, password: password}], function(err, result) {
       if (err) {
         res.send(err);
       } else {
@@ -24,8 +25,8 @@ const employees = require('../model');
     }
 });
 
-router.route("/fetchdata").get(function(req, res) {
-    employees.find({}, function(err, result) {
+router.route("/fetchuser").get(function(req, res) {
+    Users.find({}, function(err, result) {
       if (err) {
         res.send(err);
       } else {
@@ -34,9 +35,9 @@ router.route("/fetchdata").get(function(req, res) {
     });
   });
 
-  router.route("/deletedata").post(function(req, res) {
+  router.route("/deleteuser").post(function(req, res) {
     console.log(req.body.id)
-    employees.findByIdAndDelete(req.body.id, function (err) {
+    Users.findByIdAndDelete(req.body.id, function (err) {
       const itemdeleted = "Item "+req.body.id+" is deleted!";
       const itemnodeleted = "Insert ID!";
       console.log(req.body.id);
@@ -50,8 +51,8 @@ router.route("/fetchdata").get(function(req, res) {
     });
   });
 
-  router.route("/updatedata").post(function(req, res) {
-    employees.updateOne({ _id: req.body.id_update }, { name: req.body.name_update, age:req.body.age_update, location: req.body.location_update }, function(
+  router.route("/updateuser").post(function(req, res) {
+    Users.updateOne({ _id: req.body.id_update }, { user: req.body.user_update, email:req.body.email_update, password: req.body.password_update }, function(
       err,
       result
     ) {
@@ -63,6 +64,75 @@ router.route("/fetchdata").get(function(req, res) {
       }
     });
   });
+
+//PARAMETERS
+router.route("/insertparameters").post(function(req, res) {
+  const date = req.body.date;
+  const  ph = req.body.ph;
+  const ammonia = req.body.ammonia;
+  const nitrite = req.body.nitrite;
+  const nitrate = req.body.nitrate;
+  const temperature = req.body.temperature;
+  const water_change = req.body.water_change;
+  if (date == '') {
+    const messageerror = "Fill in the Date!"
+    res.redirect('/?messageerror='+messageerror);
+  }else{
+    console.log(date);
+
+  Params.insertMany([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change }], function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+        const message = "Water Parameters Inserted!"
+        res.redirect('/?message='+message);
+    }
+    });
+  }
+});
+
+router.route("/fetchparameters").get(function(req, res) {
+  Params.find({}, function(err, result) {
+    if (err) {
+      res.send(err);
+    } else {
+      res.send(result);
+    }
+  });
+});
+
+router.route("/deleteparameters").post(function(req, res) {
+  console.log(req.body.id)
+  Params.findByIdAndDelete(req.body.id, function (err) {
+    const itemdeleted = "Item "+req.body.id+" is deleted!";
+    const itemnodeleted = "Insert ID!";
+    console.log(req.body.id);
+    if(req.body.id === ''){ 
+      console.log('Item not exist');
+      res.redirect('/?nodeleted='+itemnodeleted);
+    }else{
+    console.log("Successful deletion");
+    res.redirect('/?deleted='+itemdeleted);
+    }
+  });
+});
+
+router.route("/updateparameters").post(function(req, res) {
+  Params.updateOne({ _id: req.body.id_update }, { date: req.body.date_update, ph:req.body.ph_update, ammonia: req.body.ammonia_update, nitrite: req.body.nitrite_update, nitrate: req.body.nitrate_update, temperature:req.body.temperature_update, water_change: req.body.water_change_update }, function(
+    err,
+    result
+  ) {
+    if (err) {
+      const error = "INSERT ID to Update"
+      res.redirect('/parameters?error='+error);
+    } else {
+        res.redirect('/parameters');
+    }
+  });
+});
+
+//const user = await User.findById(id).populate('posts');
+//const userByPost = await Post.findById(id).populate('user');
 
 
   module.exports = router;
