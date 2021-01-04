@@ -5,6 +5,7 @@ const Users = require("./models/user_model");
 const Params = require("./models/params_model");
 
 const Router = require('./routes/routes');
+const AuthRoute = require('./routes/auth')
 
 
 const app = express();
@@ -26,6 +27,7 @@ app.set('view engine', 'ejs');
 app.use(express.urlencoded());
 app.use(express.json());
 app.use("/api", Router);
+app.use("/auth", AuthRoute);
 
 // index page
 app.get('/', function(req, res) {
