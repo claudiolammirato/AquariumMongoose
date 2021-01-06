@@ -30,14 +30,14 @@ const register = (req, res, next) => {
     })
 }
 
-const login = (req, res, nex) => {
+const login = (req, res, next) => {
     var username = req.body.username;
     var password = req.body.password;
-    console.log(username);
+    //console.log(username);
 
     User.findOne({$or: [{email:username},{user:username}]})
     .then(user => {
-        console.log(user);
+        
         if(user){
             bcrypt.compare(password, user.password, function(err, result){
                 if(err){
@@ -46,11 +46,17 @@ const login = (req, res, nex) => {
                     })
                 }
                 if(result){
-                    let token = jwt.sign({name: user.name},'verySecretValue', {expiresIn: '1h'})
-                    res.json({
-                        message: 'Logged IN!',
-                        token: token
-                    })
+                    const expiration = 1800000000;
+                    let token = jwt.sign({name: user.name}, process.env.JWT_SECRET)
+                    console.log(token);
+
+                    res.cookie('token', token, {
+                        expires: new Date(Date.now() + expiration),
+                        secure: false, // set to true if your using https
+                        httpOnly: true,
+                      });
+                    res.redirect('/');
+                      
                 }else{
                     res.json({
                         message: 'Wrong password!!!'
