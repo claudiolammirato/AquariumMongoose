@@ -13,13 +13,15 @@
 <div class="row">
     <div class="col-sm-8">
         <div class="jumbotron">
-            <h1>Login</h1>
-            <form action="/auth/login" method="post">
+            <h1>Register</h1>
+            <form action="/auth/register" method="post">
                 <label for="fname">Username:</label>
                 <input type="text" id="username" name="username"><br><br>
+                <label for="fname">Email:</label>
+                <input type="text" id="email" name="email"><br><br>
                 <label for="fname">Password:</label>
                 <input type="text" id="password" name="password"><br><br>
-                <input type="submit" value="Login">
+                <input type="submit" value="Register">
               </form>
               <p><%= message %></p>
         </div>

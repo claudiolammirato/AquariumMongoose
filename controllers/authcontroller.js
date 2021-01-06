@@ -7,25 +7,22 @@ const register = (req, res, next) => {
         if(err) {
             res.json({
                 error: err
-            })
+            }).redirect('/register')
         }
 
         let user = new User({
-            user: req.body.user,
+            user: req.body.username,
             email: req.body.email,
             password: hasedpass
         })
         user.save()
         .then(user => {
-            res.json({
-            message: 'User added Succesfully!'
+          const message = "User Registered!"
+          res.redirect('/register/?message='+message);
         })
-    })
         .catch(error => {
-            res.json({
-                message: 'An error occurred!' + error
-            
-        })
+            const message = "An error occurred!";
+            res.redirect('/register/?message=' +message+';'+error);
     })
     })
 }
@@ -44,6 +41,7 @@ const login = (req, res, next) => {
                     res.json({
                         error: err
                     })
+                    
                 }
                 if(result){
                     const expiration = 1800000000;
@@ -60,18 +58,19 @@ const login = (req, res, next) => {
                         secure: false, // set to true if your using https
                         httpOnly: true,
                       });
-                    res.redirect('/');
+                      
+                      const message = "User Loged in!"
+                      res.redirect('/?message='+message);
                       
                 }else{
-                    res.json({
-                        message: 'Wrong password!!!'
-                    })
+                    const message = 'Wrong password!!!';
+                    res.redirect('/login/?message=' +message);
                 }
             })
-        }else{
-            res.json({
-                message: 'User not found!'
-            })
+                }else{
+                    const message = 'User not found!';
+                    res.redirect('/login/?message=' +message);
+            
         }
     })
 

@@ -43,7 +43,7 @@ app.use(cookieParser());
 
 
 // index page
-app.get('/', function(req, res) {
+app.get('/', authenticate, function(req, res) {
     var mascots = [
         { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
         { name: 'Tux', organization: "Linux", birth_year: 1996},
@@ -55,7 +55,8 @@ app.get('/', function(req, res) {
     res.render('pages/index', {
               mascots: mascots,
               tagline: tagline,
-              user: user,
+              user: req.cookies.user.user,
+              message: req.query.message
       })
 });
 
@@ -63,21 +64,40 @@ app.get('/', function(req, res) {
 app.get('/about', authenticate, function(req, res) {
     var user = "Claudio";
     res.render('pages/about',{
-        user:user
+      user: req.cookies.user.user
     });
 });
 
 // Login page
 app.get('/login', function(req, res) {
-  var user = "Claudio";
-  //console.log(req.header);
-  res.render('pages/login',{
-      user:user
-  });
+  if(req.cookies.user !== undefined){
+    res.render('pages/login',{
+        user: req.cookies.user.user ,
+        message: req.query.message
+    });
+  }else{
+    res.render('pages/login',{
+    user: "Any user Logged In!",
+    message: req.query.message
+  });}
+});
+
+// Register page
+app.get('/register', function(req, res) {
+  if(req.cookies.user !== undefined){
+    res.render('pages/register',{
+        user: req.cookies.user.user ,
+        message: req.query.message
+    });
+  }else{
+    res.render('pages/register',{
+    user: "Any user Logged In!",
+    message: req.query.message
+  });}
 });
 
 //Logout page
-app.get('/logout', (req, res) => {
+app.get('/logout', authenticate, (req, res) => {
   cookie = req.cookies;
     for (var prop in cookie) {
         if (!cookie.hasOwnProperty(prop)) {
@@ -89,7 +109,7 @@ app.get('/logout', (req, res) => {
 });
 
 // Users page
-app.get('/users', function(req, res) {
+app.get('/users', authenticate, function(req, res) {
   var mascots = [
     { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
     { name: 'Tux', organization: "Linux", birth_year: 1996},
@@ -106,7 +126,7 @@ var user = "Claudio";
         res.render('pages/users', {
           mascots: mascots,
           tagline: tagline,
-          user: user,
+          user: req.cookies.user.user,
           result: result,
           error: req.query.error,
           itemdeleted: req.query.deleted,
@@ -120,14 +140,15 @@ var user = "Claudio";
 
 
 // Parameters page
-app.get('/parameters', function(req, res) {
-  var user = "Claudio";
-  Params.find({}, function(err, result) {
+app.get('/parameters', authenticate, function(req, res) {
+  console.log(req.cookies.user._id)
+
+  Params.find({user: mongoose.Types.ObjectId(req.cookies.user._id)}, function(err, result) {
     if (err) {
       res.send(err);
     } else {
         res.render('pages/parameters', {
-          user: user,
+          user: req.cookies.user.user,
           result: result,
           error: req.query.error,
           itemdeleted: req.query.deleted,
