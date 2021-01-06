@@ -27,8 +27,9 @@ let params = new Schema(
         type: Date,
     },
     user :{
-      type:mongoose.Schema.Types.ObjectId,
-      ref:'user'
+      type: mongoose.Schema.Types.ObjectId,
+      ref:'user',
+      required: true
   }
   },
   { collection: "Parameters" },

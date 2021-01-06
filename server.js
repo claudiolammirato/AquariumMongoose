@@ -62,7 +62,6 @@ app.get('/', function(req, res) {
 // about page
 app.get('/about', authenticate, function(req, res) {
     var user = "Claudio";
-    console.log(req.header('token'));
     res.render('pages/about',{
         user:user
     });
@@ -71,18 +70,22 @@ app.get('/about', authenticate, function(req, res) {
 // Login page
 app.get('/login', function(req, res) {
   var user = "Claudio";
-  console.log(req.header);
+  //console.log(req.header);
   res.render('pages/login',{
       user:user
   });
 });
 
 //Logout page
-app.post('/logout', (req, res) => {
-  const { token } = req.body;
-  refreshTokens = refreshTokens.filter(token => t !== token);
-
-  res.send("Logout successful");
+app.get('/logout', (req, res) => {
+  cookie = req.cookies;
+    for (var prop in cookie) {
+        if (!cookie.hasOwnProperty(prop)) {
+            continue;
+        }    
+        res.cookie(prop, '', {expires: new Date(0)});
+    }
+    res.redirect('/');
 });
 
 // Users page

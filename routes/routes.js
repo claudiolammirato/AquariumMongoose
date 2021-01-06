@@ -1,5 +1,9 @@
 const express = require('express');
 const router = express.Router();
+const cookieParser = require('cookie-parser');
+router.use(cookieParser());
+
+
 const Users = require("../models/user_model");
 const Params = require("../models/params_model");
 
@@ -14,7 +18,7 @@ const Params = require("../models/params_model");
     }else{
       console.log(user);
 
-    Users.insertMany([{user: user, email: email, password: password}], function(err, result) {
+    Users.create([{user: user, email: email, password: password}], function(err, result) {
       if (err) {
         res.send(err);
       } else {
@@ -67,6 +71,9 @@ router.route("/fetchuser").get(function(req, res) {
 
 //PARAMETERS
 router.route("/insertparameters").post(function(req, res) {
+  
+  //console.log(req.cookies.user.user)
+  
   const date = req.body.date;
   const  ph = req.body.ph;
   const ammonia = req.body.ammonia;
@@ -80,7 +87,7 @@ router.route("/insertparameters").post(function(req, res) {
   }else{
     console.log(date);
 
-  Params.insertMany([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change }], function(err, result) {
+  Params.create([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change, user: req.cookies.user }], function(err, result) {
     if (err) {
       res.send(err);
     } else {

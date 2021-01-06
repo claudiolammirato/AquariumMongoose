@@ -18,9 +18,7 @@ let users = new Schema(
       type: String,
       required: true
     },
-    params : [
-      {type: mongoose.Schema.Types.ObjectId,ref:'params'}
-  ]
+    
   },
   { collection: "Users" },
   { timestamps: true }
