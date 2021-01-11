@@ -3,7 +3,7 @@ var urllib = require('urllib');
 
 
 var claudio = function postReq(){
-     urllib.request('http://localhost:4000/auth/login', {
+    urllib.request('http://localhost:4000/auth/login', {
     method: 'POST',
     headers: {
         'Content-Type': 'application/json'
@@ -42,9 +42,9 @@ function getReq(){
 
     });
 }
-let promessaCompiti = new Promise(function(resolve,reject){
+let promessaCompiti = new Promise(async function(resolve,reject){
     try{
-        resolve(claudio);
+        resolve(await claudio);
  } catch(error){
         reject(error);
  }
