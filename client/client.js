@@ -33,7 +33,7 @@ request.post(options, (err, res, body) => {
     console.log(`Status: ${res.statusCode}`);
     console.log(res.headers);
 });
- res.send(req.headers)
+ res.send(res.headers)
 });
 
 // About page

@@ -1,24 +1,35 @@
-const axios = require('axios')
+const bent = require('bent')
 
-const sendGetRequest = async () => {
-    try {
-        const resp = await axios('http://localhost:4000/about', {
-          method: 'GET',
-          withCredentials: true,
-          headers: { Cookie: 'TWFydGE6MTIzNA==' }
-        }).then(res => {
-              console.log(res.data);
-            }).catch(err => {
-              console.log(err.response);
-            })
-        
-        //console.log(resp);
-    } catch (err) {
-        // Handle Error Here
-        console.error(err);
-    }
-};
+const getJSON = bent('json')
+const getBuffer = bent('buffer')
 
 
 
-sendGetRequest();
+async function postReq() {
+  try{
+const post = bent('http://localhost:4000/', 'POST', 'json', 200);
+const response =  await post('auth/login', {username: 'Marta', password: "1234"});
+
+//console.log(response)
+
+//const getStream = bent('http://localhost:4000/')
+
+//let stream = await getStream('/about')
+// status code
+//stream.status // 200
+//stream.statusCode // 200
+// optionally decode
+//const str = await stream.text()
+
+//console.log(obj)
+console.log('in')
+
+} catch (error){
+  console.log(error)
+}
+}
+
+postReq();
+
+
+//let buffer = await getBuffer('http://site.com/image.png')

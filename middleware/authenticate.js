@@ -6,7 +6,7 @@ const authenticate = (req, res, next) => {
         const token = req.cookies['token'];
         if(token == undefined){
             const token = req.headers.authorization.split(' ')[1];
-            //console.log(token)
+            console.log(token)
         }
         const decode = jwt.verify(token, process.env.JWT_SECRET);
 

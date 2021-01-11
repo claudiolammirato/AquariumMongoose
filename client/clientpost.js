@@ -1,5 +1,7 @@
 const axios = require('axios')
 
+axios.defaults.withCredentials = true
+
 const username = 'Marta'
 const password = '1234'
 
@@ -13,11 +15,7 @@ const data = {
 
 const sendPostRequest = async () => {
   try {
-      const post = await axios.post(url, data, {
-  headers: {
-    'Authorization': `Bearer ${token}`
-  },
-})
+      const post = await axios.post(url, data,{withCredentials: true})
 .then((res) => {
     //console.log(res.config.headers.Authorization.split(' ')[1])
     console.log(res)

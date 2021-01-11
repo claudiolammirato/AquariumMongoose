@@ -16,7 +16,6 @@ const authenticate = require('./middleware/authenticate');
 
 const app = express();
 
-
 const port = process.env.PORT || 4000;
 
 mongoose.connect(uri, { useUnifiedTopology: true, useNewUrlParser: true });
@@ -37,7 +36,10 @@ app.use(express.json());
 app.use("/api", Router);
 app.use("/auth", AuthRoute);
 
-app.use(cors());
+app.use(cors({
+  credentials: true,
+  origin: 'http://localhost:4000/auth/login',
+}));
 app.use(cookieParser());
 
 
