@@ -1,11 +1,18 @@
-const socket = io();
+const content = require('fs').readFileSync(__dirname + '/index.html', 'utf8');
 
-socket.on('connect', () => {
-  $events.appendChild(newItem('connect'));
+const httpServer = require('http').createServer((req, res) => {
+  // serve the index.html file
+  res.setHeader('Content-Type', 'text/html');
+  res.setHeader('Content-Length', Buffer.byteLength(content));
+  res.end(content);
 });
 
-let counter = 0;
-setInterval(() => {
-  ++counter;
-  socket.emit('hey', { counter }); // the object will be serialized for you
-}, 1000);
+const io = require('socket.io')(httpServer);
+
+io.on('connection', socket => {
+  console.log('connect');
+});
+
+httpServer.listen(3000, () => {
+  console.log('go to http://localhost:3000');
+});
