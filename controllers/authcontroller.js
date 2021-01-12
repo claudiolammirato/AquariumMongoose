@@ -46,7 +46,7 @@ const login = (req, res, next) => {
                 if(result){
                     const expiration = 1800000000;
                     let token = jwt.sign({name: user.name}, process.env.JWT_SECRET)
-                    console.log(token);
+                    //console.log(token);
 
                     res.cookie('token', token, {
                         expires: new Date(Date.now() + expiration),

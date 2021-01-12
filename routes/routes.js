@@ -40,16 +40,16 @@ router.route("/fetchuser").get(function(req, res) {
   });
 
   router.route("/deleteuser").post(function(req, res) {
-    console.log(req.body.id)
+    //console.log(req.body.id)
     Users.findByIdAndDelete(req.body.id, function (err) {
       const itemdeleted = "Item "+req.body.id+" is deleted!";
       const itemnodeleted = "Insert ID!";
-      console.log(req.body.id);
+      //console.log(req.body.id);
       if(req.body.id === ''){ 
-        console.log('Item not exist');
+        //console.log('Item not exist');
         res.redirect('/?nodeleted='+itemnodeleted);
       }else{
-      console.log("Successful deletion");
+      //console.log("Successful deletion");
       res.redirect('/?deleted='+itemdeleted);
       }
     });
@@ -85,7 +85,7 @@ router.route("/insertparameters").post(function(req, res) {
     const messageerror = "Fill in the Date!"
     res.redirect('/?messageerror='+messageerror);
   }else{
-    console.log(date);
+    //console.log(date);
 
   Params.create([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change, user: req.cookies.user }], function(err, result) {
     if (err) {
@@ -109,16 +109,16 @@ router.route("/fetchparameters").get(function(req, res) {
 });
 
 router.route("/deleteparameters").post(function(req, res) {
-  console.log(req.body.id)
+  //console.log(req.body.id)
   Params.findByIdAndDelete(req.body.id, function (err) {
     const itemdeleted = "Item "+req.body.id+" is deleted!";
     const itemnodeleted = "Insert ID!";
-    console.log(req.body.id);
+    //console.log(req.body.id);
     if(req.body.id === ''){ 
-      console.log('Item not exist');
+      //console.log('Item not exist');
       res.redirect('/?nodeleted='+itemnodeleted);
     }else{
-    console.log("Successful deletion");
+    //console.log("Successful deletion");
     res.redirect('/?deleted='+itemdeleted);
     }
   });

@@ -27,6 +27,7 @@
     "qs": "^6.9.4",
     "request": "^2.88.2",
     "set-cookie-parser": "^2.4.6",
+    "socket.io": "^3.0.5",
     "tough-cookie": "^4.0.0",
     "urllib": "^2.36.1"
   },

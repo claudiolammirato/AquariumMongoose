@@ -3,6 +3,13 @@ const mongoose = require("mongoose");
 const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
+const ejs = require('ejs');
+
+
+const app = express();
+
+var server      = require('http').createServer(app);
+var io          = require('socket.io')(server);
 
 var uri = process.env.DB_MONGO;
 const Users = require("./models/user_model");
@@ -14,7 +21,6 @@ const authenticate = require('./middleware/authenticate');
 
 
 
-const app = express();
 
 const port = process.env.PORT || 4000;
 
@@ -46,6 +52,7 @@ app.use(cookieParser());
 
 // index page
 app.get('/', authenticate, function(req, res) {
+  
     var mascots = [
         { name: 'Sammy', organization: "DigitalOcean", birth_year: 2012},
         { name: 'Tux', organization: "Linux", birth_year: 1996},
@@ -143,7 +150,7 @@ var user = "Claudio";
 
 // Parameters page
 app.get('/parameters', authenticate, function(req, res) {
-  console.log(req.cookies.user._id)
+  //console.log(req.cookies.user._id)
 
   Params.find({user: mongoose.Types.ObjectId(req.cookies.user._id)}, function(err, result) {
     if (err) {
@@ -162,7 +169,13 @@ app.get('/parameters', authenticate, function(req, res) {
     })
     })
 
+io.on('connection', function(socket) {
+  console.log('a user connected');
+  socket.on('chat message', function(msg){
+      console.log('message: ' + msg);
+    });
+});
 
-app.listen(port, function() {
+server.listen(port, function() {
   console.log("Server is running on Port: " + port);
 });
