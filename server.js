@@ -168,13 +168,12 @@ app.get('/parameters', authenticate, function(req, res) {
       }
     })
     })
-
-io.on('connection', function(socket) {
-  console.log('a user connected');
-  socket.on('chat message', function(msg){
-      console.log('message: ' + msg);
-    });
+// send from client to server
+io.on('connection', socket => {
+  console.log('connect');
 });
+
+
 
 server.listen(port, function() {
   console.log("Server is running on Port: " + port);
