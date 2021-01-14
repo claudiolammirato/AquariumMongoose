@@ -1,18 +1,11 @@
-const content = require('fs').readFileSync(__dirname + '/index.html', 'utf8');
 
-const httpServer = require('http').createServer((req, res) => {
-  // serve the index.html file
-  res.setHeader('Content-Type', 'text/html');
-  res.setHeader('Content-Length', Buffer.byteLength(content));
-  res.end(content);
-});
 
-const io = require('socket.io')(httpServer);
+// Client
+var io2 = require('socket.io-client');
+var socket2 = io2.connect('http://localhost:4000');
 
-io.on('connection', socket => {
-  console.log('connect');
-});
+var msg2 = "hello";
 
-httpServer.listen(3000, () => {
-  console.log('go to http://localhost:3000');
-});
+setInterval(function() {
+    socket2.emit('foo', msg2);
+}, 2000);
