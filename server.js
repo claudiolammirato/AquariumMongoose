@@ -171,7 +171,7 @@ app.get('/parameters', authenticate, function(req, res) {
 // send from client to server
 io.on('connection', socket => {
   console.log('connect');
-  socket.on('foo', function(msg2) {
+  socket.on('insertparams', function(msg2) {
     console.log(msg2);
   });
 });
