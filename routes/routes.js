@@ -81,17 +81,22 @@ router.route("/insertparameters").post(function(req, res) {
   const nitrate = req.body.nitrate;
   const temperature = req.body.temperature;
   const water_change = req.body.water_change;
+  const user = (req.cookies.user!== undefined) ? req.cookies.user : req.body.user;
+  console.log(user.email)
+  
   if (date == '') {
     const messageerror = "Fill in the Date!"
     res.redirect('/?messageerror='+messageerror);
   }else{
     //console.log(date);
 
-  Params.create([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change, user: req.cookies.user }], function(err, result) {
+  Params.create([{date: date, ph: ph, ammonia: ammonia, nitrite: nitrite, nitrate: nitrate, temperature: temperature, water_change: water_change, user: user }], function(err, result) {
     if (err) {
       res.send(err);
+      console.log(err)
     } else {
         const message = "Water Parameters Inserted!"
+        console.log(message)
         res.redirect('/?message='+message);
     }
     });

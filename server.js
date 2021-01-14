@@ -4,6 +4,7 @@ const cors = require('cors');
 const cookieParser = require('cookie-parser');
 require('dotenv').config()
 const ejs = require('ejs');
+const axios = require('axios')
 
 
 const app = express();
@@ -168,13 +169,35 @@ app.get('/parameters', authenticate, function(req, res) {
       }
     })
     })
-// send from client to server
+
+
+// SOCKET-IO - cambiare user va fatta autenticazione
 io.on('connection', socket => {
   console.log('connect');
   socket.on('insertparams', function(msg2) {
     console.log(msg2);
+      
+
+      axios.post('http://localhost:4000/api/insertparameters', {
+      date: '11/01/2021',
+      ph: '12',
+      ammonia: '2',
+      nitrite: '10',
+      nitrate: '50',
+      temperature: '30',
+      water_change: '11/01/2021',
+      user: 'Marta'
+      })
+      .then(function (response) {
+        //console.log(response);
+        console.log('done')
+      })
+      .catch(function (error) {
+        //console.log(error);
+      })
+    })  
   });
-});
+
 
 
 
