@@ -195,13 +195,13 @@ io.on('connection', socket => {
                 }
                 if(result){
                     axios.post('http://localhost:4000/api/insertparameters', {
-                    date: '2021-01-06T00:00:00.000+00:00',
-                    ph: '12',
-                    ammonia: '2',
-                    nitrite: '10',
-                    nitrate: '50',
-                    temperature: '30',
-                    water_change: '2021-01-06T00:00:00.000+00:00',
+                    date: user2.date,
+                    ph: user2.ph,
+                    ammonia: user2.ammonia,
+                    nitrite: user2.nitrite,
+                    nitrate: user2.nitrate,
+                    temperature: user2.temperature,
+                    water_change: user2.water_change,
                     user: user
                     })
                     .then(function (response) {
