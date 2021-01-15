@@ -82,7 +82,7 @@ router.route("/insertparameters").post(function(req, res) {
   const temperature = req.body.temperature;
   const water_change = req.body.water_change;
   const user = (req.cookies.user!== undefined) ? req.cookies.user : req.body.user;
-  console.log(user.email)
+  //console.log(user.email)
   
   if (date == '') {
     const messageerror = "Fill in the Date!"
